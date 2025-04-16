@@ -1,4 +1,3 @@
-
 export interface CareGuide {
   id: string;
   title: string;
@@ -20,7 +19,7 @@ export interface CareGuide {
 export const careGuides: CareGuide[] = [
   {
     id: '1',
-    title: 'Beginner's Guide to Indoor Plants',
+    title: 'Beginner\'s Guide to Indoor Plants',
     slug: 'beginners-guide-to-indoor-plants',
     image: 'https://images.unsplash.com/photo-1545241047-6083a3684587?q=80&w=800&auto=format&fit=crop',
     summary: 'Everything you need to know to start your indoor plant journey successfully.',
