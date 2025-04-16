@@ -52,6 +52,37 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+        // Plant nursery theme colors
+        garden: {
+          100: '#f2fcf1', // Lightest green, almost white
+          200: '#e0f4da', // Very light green
+          300: '#c5e8bd', // Light green
+          400: '#a3d999', // Medium light green
+          500: '#70c966', // Medium green
+          600: '#4ba83c', // Medium dark green  
+          700: '#3d8a32', // Dark green
+          800: '#306d28', // Very dark green
+          900: '#245020', // Darkest green
+        },
+        earth: {
+          100: '#f9f1ea', // Lightest terracotta
+          200: '#f0ddc9', // Light terracotta
+          300: '#e0c0a0', // Medium light terracotta
+          400: '#ce9f78', // Medium terracotta
+          500: '#bb815a', // Terracotta
+          600: '#9c6a47', // Medium dark terracotta
+          700: '#7d553a', // Dark terracotta
+          800: '#5e3f2b', // Very dark terracotta
+          900: '#42301f', // Darkest terracotta
+        },
+        cream: {
+          50: '#fefdf9',
+          100: '#fcf9f0',
+          200: '#f7f1e1',
+          300: '#f1e4ca',
+          400: '#e5d3ae',
+          500: '#d9c397',
+        },
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
