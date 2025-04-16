@@ -5,32 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { products } from "@/data/products";
-
-// For demonstration purposes, we'll use a sample cart
-const sampleCart = [
-  { productId: 1, quantity: 2 },
-  { productId: 3, quantity: 1 },
-  { productId: 6, quantity: 3 },
-];
+import { useCart } from "@/contexts/CartContext";
 
 const Cart = () => {
-  // Find product details for cart items
-  const cartItems = sampleCart.map((item) => {
-    const product = products.find((p) => p.id === item.productId);
-    return {
-      ...item,
-      product,
-      price: product ? (product.discountPrice || product.price) : 0,
-    };
-  });
-
-  // Calculate subtotal
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-  const shipping = 5.99;
+  const { cartItems, removeFromCart, updateCartItemQuantity, getCartTotal } = useCart();
+  
+  const subtotal = getCartTotal();
+  const shipping = cartItems.length > 0 ? 5.99 : 0;
   const total = subtotal + shipping;
 
   return (
@@ -58,19 +39,22 @@ const Cart = () => {
                       <div className="col-span-6 flex items-center gap-4">
                         <div className="h-20 w-20 bg-garden-50 rounded-md overflow-hidden shrink-0">
                           <img
-                            src={item.product?.image}
-                            alt={item.product?.name}
+                            src={item.product.image}
+                            alt={item.product.name}
                             className="h-full w-full object-cover"
                           />
                         </div>
                         <div>
                           <h3 className="font-medium text-garden-800">
-                            {item.product?.name}
+                            {item.product.name}
                           </h3>
                           <p className="text-sm text-garden-500">
-                            {item.product?.category}
+                            {item.product.category}
                           </p>
-                          <button className="flex items-center gap-1 text-sm text-garden-600 hover:text-garden-800 mt-1 md:hidden">
+                          <button 
+                            className="flex items-center gap-1 text-sm text-garden-600 hover:text-garden-800 mt-1 md:hidden"
+                            onClick={() => removeFromCart(item.productId)}
+                          >
                             <Trash2 size={14} />
                             <span>Remove</span>
                           </button>
@@ -80,17 +64,23 @@ const Cart = () => {
                       <div className="col-span-2 text-center md:text-garden-800">
                         <div className="flex justify-between md:block">
                           <span className="md:hidden text-garden-600">Price:</span>
-                          <span>${item.price.toFixed(2)}</span>
+                          <span>${(item.product.discountPrice || item.product.price).toFixed(2)}</span>
                         </div>
                       </div>
                       
                       <div className="col-span-2 flex justify-center">
                         <div className="flex items-center gap-2">
-                          <button className="h-8 w-8 rounded-full border border-garden-200 flex items-center justify-center text-garden-600 hover:bg-garden-50">
+                          <button 
+                            className="h-8 w-8 rounded-full border border-garden-200 flex items-center justify-center text-garden-600 hover:bg-garden-50"
+                            onClick={() => updateCartItemQuantity(item.productId, item.quantity - 1)}
+                          >
                             <Minus size={16} />
                           </button>
                           <span className="w-8 text-center">{item.quantity}</span>
-                          <button className="h-8 w-8 rounded-full border border-garden-200 flex items-center justify-center text-garden-600 hover:bg-garden-50">
+                          <button 
+                            className="h-8 w-8 rounded-full border border-garden-200 flex items-center justify-center text-garden-600 hover:bg-garden-50"
+                            onClick={() => updateCartItemQuantity(item.productId, item.quantity + 1)}
+                          >
                             <Plus size={16} />
                           </button>
                         </div>
@@ -99,12 +89,15 @@ const Cart = () => {
                       <div className="col-span-2 text-center font-medium text-garden-800">
                         <div className="flex justify-between md:block">
                           <span className="md:hidden text-garden-600">Total:</span>
-                          <span>${(item.price * item.quantity).toFixed(2)}</span>
+                          <span>${((item.product.discountPrice || item.product.price) * item.quantity).toFixed(2)}</span>
                         </div>
                       </div>
                       
                       <div className="hidden md:flex md:col-span-12 justify-end">
-                        <button className="flex items-center gap-1 text-sm text-garden-600 hover:text-garden-800">
+                        <button 
+                          className="flex items-center gap-1 text-sm text-garden-600 hover:text-garden-800"
+                          onClick={() => removeFromCart(item.productId)}
+                        >
                           <Trash2 size={14} />
                           <span>Remove</span>
                         </button>

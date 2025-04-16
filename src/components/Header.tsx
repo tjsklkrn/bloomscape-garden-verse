@@ -2,10 +2,15 @@
 import { useState } from "react";
 import { ShoppingCart, Menu, Search, Heart, User, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { cartItems } = useCart();
+  
+  // Calculate total items in cart
+  const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -54,7 +59,11 @@ const Header = () => {
             </Link>
             <Link to="/cart" className="text-garden-800 hover:text-garden-600 transition-colors relative">
               <ShoppingCart size={22} />
-              <span className="absolute -top-2 -right-2 bg-garden-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">3</span>
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-garden-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartItemsCount > 99 ? '99+' : cartItemsCount}
+                </span>
+              )}
             </Link>
           </div>
         </div>

@@ -1,6 +1,7 @@
 
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
 
 export interface Product {
   id: number;
@@ -20,6 +21,13 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigating to product detail
+    addToCart(product, 1);
+  };
+
   return (
     <div className="plant-card group">
       {/* Product Image */}
@@ -49,7 +57,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </button>
         
         {/* Quick add to cart */}
-        <button className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white bg-opacity-95 text-garden-800 font-medium px-4 py-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-garden-600 hover:text-white transform translate-y-2 group-hover:translate-y-0">
+        <button 
+          onClick={handleAddToCart}
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white bg-opacity-95 text-garden-800 font-medium px-4 py-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-garden-600 hover:text-white transform translate-y-2 group-hover:translate-y-0"
+        >
           Add to Cart
         </button>
       </div>
