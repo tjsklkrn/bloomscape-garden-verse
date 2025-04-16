@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
+import CareGuides from "./pages/CareGuides";
+import CareGuideDetail from "./pages/CareGuideDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,11 +23,11 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/care-guides" element={<CareGuides />} />
+          <Route path="/care-guides/:slug" element={<CareGuideDetail />} />
           {/* These are placeholder routes for now */}
           <Route path="/categories" element={<NotFound />} />
           <Route path="/categories/:id" element={<NotFound />} />
-          <Route path="/care-guides" element={<NotFound />} />
-          <Route path="/care-guides/:guide" element={<NotFound />} />
           <Route path="/about" element={<NotFound />} />
           <Route path="/contact" element={<NotFound />} />
           <Route path="/blog" element={<NotFound />} />
